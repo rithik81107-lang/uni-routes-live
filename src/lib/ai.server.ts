@@ -107,7 +107,7 @@ export async function callAI(opts: {
 
 export async function callAIJson<T>(opts: {
   system: string;
-  input: string;
+  input: string | unknown[];
   schema: JsonSchemaSpec;
   effort?: "low" | "medium" | "high";
 }): Promise<T> {
