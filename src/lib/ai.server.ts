@@ -20,7 +20,7 @@ function friendlyError(status: number, message: string): string {
 
 export async function callAI(opts: {
   system: string;
-  input: string;
+  input: string | unknown[];
   schema?: JsonSchemaSpec;
   effort?: "low" | "medium" | "high";
 }): Promise<string> {
@@ -107,7 +107,7 @@ export async function callAI(opts: {
 
 export async function callAIJson<T>(opts: {
   system: string;
-  input: string;
+  input: string | unknown[];
   schema: JsonSchemaSpec;
   effort?: "low" | "medium" | "high";
 }): Promise<T> {
