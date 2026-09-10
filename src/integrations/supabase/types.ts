@@ -14,7 +14,215 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      alerts: {
+        Row: {
+          bus_id: string | null
+          created_at: string
+          id: string
+          kind: string
+          message: string
+          title: string
+        }
+        Insert: {
+          bus_id?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          message: string
+          title: string
+        }
+        Update: {
+          bus_id?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          message?: string
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "alerts_bus_id_fkey"
+            columns: ["bus_id"]
+            isOneToOne: false
+            referencedRelation: "buses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      buses: {
+        Row: {
+          bus_number: string
+          capacity: number
+          color: string
+          created_at: string
+          departure_time: string
+          driver_name: string
+          driver_phone: string
+          id: string
+          route_name: string
+        }
+        Insert: {
+          bus_number: string
+          capacity?: number
+          color?: string
+          created_at?: string
+          departure_time?: string
+          driver_name: string
+          driver_phone: string
+          id?: string
+          route_name: string
+        }
+        Update: {
+          bus_number?: string
+          capacity?: number
+          color?: string
+          created_at?: string
+          departure_time?: string
+          driver_name?: string
+          driver_phone?: string
+          id?: string
+          route_name?: string
+        }
+        Relationships: []
+      }
+      emergency_contacts: {
+        Row: {
+          description: string
+          id: string
+          label: string
+          phone: string
+          sort_order: number
+        }
+        Insert: {
+          description?: string
+          id?: string
+          label: string
+          phone: string
+          sort_order?: number
+        }
+        Update: {
+          description?: string
+          id?: string
+          label?: string
+          phone?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          department: string
+          full_name: string
+          id: string
+          roll_number: string
+          selected_bus_id: string | null
+          selected_stop_id: string | null
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          department?: string
+          full_name?: string
+          id: string
+          roll_number?: string
+          selected_bus_id?: string | null
+          selected_stop_id?: string | null
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          department?: string
+          full_name?: string
+          id?: string
+          roll_number?: string
+          selected_bus_id?: string | null
+          selected_stop_id?: string | null
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "profiles_selected_bus_id_fkey"
+            columns: ["selected_bus_id"]
+            isOneToOne: false
+            referencedRelation: "buses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "profiles_selected_stop_id_fkey"
+            columns: ["selected_stop_id"]
+            isOneToOne: false
+            referencedRelation: "stops"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      route_stops: {
+        Row: {
+          bus_id: string
+          id: string
+          offset_minutes: number
+          stop_id: string
+          stop_order: number
+        }
+        Insert: {
+          bus_id: string
+          id?: string
+          offset_minutes?: number
+          stop_id: string
+          stop_order: number
+        }
+        Update: {
+          bus_id?: string
+          id?: string
+          offset_minutes?: number
+          stop_id?: string
+          stop_order?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "route_stops_bus_id_fkey"
+            columns: ["bus_id"]
+            isOneToOne: false
+            referencedRelation: "buses"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "route_stops_stop_id_fkey"
+            columns: ["stop_id"]
+            isOneToOne: false
+            referencedRelation: "stops"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      stops: {
+        Row: {
+          area: string
+          created_at: string
+          id: string
+          lat: number
+          lng: number
+          name: string
+        }
+        Insert: {
+          area?: string
+          created_at?: string
+          id?: string
+          lat: number
+          lng: number
+          name: string
+        }
+        Update: {
+          area?: string
+          created_at?: string
+          id?: string
+          lat?: number
+          lng?: number
+          name?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
