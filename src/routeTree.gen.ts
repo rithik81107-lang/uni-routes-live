@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MapRouteImport } from './routes/map'
+import { Route as ProfileRouteImport } from './routes/profile'
 import { Route as ReportRouteImport } from './routes/report'
 import { Route as ScanRouteImport } from './routes/scan'
 import { Route as ReportsIndexRouteImport } from './routes/reports.index'
@@ -24,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const MapRoute = MapRouteImport.update({
   id: '/map',
   path: '/map',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileRoute = ProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ReportRoute = ReportRouteImport.update({
@@ -50,6 +56,7 @@ const ReportsReportIdRoute = ReportsReportIdRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/map': typeof MapRoute
+  '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
   '/scan': typeof ScanRoute
   '/reports/$reportId': typeof ReportsReportIdRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/map': typeof MapRoute
+  '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
   '/scan': typeof ScanRoute
   '/reports/$reportId': typeof ReportsReportIdRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/map': typeof MapRoute
+  '/profile': typeof ProfileRoute
   '/report': typeof ReportRoute
   '/scan': typeof ScanRoute
   '/reports/$reportId': typeof ReportsReportIdRoute
@@ -75,13 +84,27 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/map' | '/report' | '/scan' | '/reports/$reportId' | '/reports/'
+    | '/'
+    | '/map'
+    | '/profile'
+    | '/report'
+    | '/scan'
+    | '/reports/$reportId'
+    | '/reports/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/map' | '/report' | '/scan' | '/reports/$reportId' | '/reports'
+  to:
+    | '/'
+    | '/map'
+    | '/profile'
+    | '/report'
+    | '/scan'
+    | '/reports/$reportId'
+    | '/reports'
   id:
     | '__root__'
     | '/'
     | '/map'
+    | '/profile'
     | '/report'
     | '/scan'
     | '/reports/$reportId'
@@ -91,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   MapRoute: typeof MapRoute
+  ProfileRoute: typeof ProfileRoute
   ReportRoute: typeof ReportRoute
   ScanRoute: typeof ScanRoute
   ReportsReportIdRoute: typeof ReportsReportIdRoute
@@ -111,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/map'
       fullPath: '/map'
       preLoaderRoute: typeof MapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile': {
+      id: '/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/report': {
@@ -147,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   MapRoute: MapRoute,
+  ProfileRoute: ProfileRoute,
   ReportRoute: ReportRoute,
   ScanRoute: ScanRoute,
   ReportsReportIdRoute: ReportsReportIdRoute,
