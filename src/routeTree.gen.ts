@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as MapRouteImport } from './routes/map'
 import { Route as ReportRouteImport } from './routes/report'
 import { Route as ScanRouteImport } from './routes/scan'
+import { Route as ReportsIndexRouteImport } from './routes/reports.index'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -34,18 +35,25 @@ const ScanRoute = ScanRouteImport.update({
   path: '/scan',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ReportsIndexRoute = ReportsIndexRouteImport.update({
+  id: '/reports/',
+  path: '/reports/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/map': typeof MapRoute
   '/report': typeof ReportRoute
   '/scan': typeof ScanRoute
+  '/reports/': typeof ReportsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/map': typeof MapRoute
   '/report': typeof ReportRoute
   '/scan': typeof ScanRoute
+  '/reports': typeof ReportsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -53,13 +61,14 @@ export interface FileRoutesById {
   '/map': typeof MapRoute
   '/report': typeof ReportRoute
   '/scan': typeof ScanRoute
+  '/reports/': typeof ReportsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/map' | '/report' | '/scan'
+  fullPaths: '/' | '/map' | '/report' | '/scan' | '/reports/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/map' | '/report' | '/scan'
-  id: '__root__' | '/' | '/map' | '/report' | '/scan'
+  to: '/' | '/map' | '/report' | '/scan' | '/reports'
+  id: '__root__' | '/' | '/map' | '/report' | '/scan' | '/reports/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -67,6 +76,7 @@ export interface RootRouteChildren {
   MapRoute: typeof MapRoute
   ReportRoute: typeof ReportRoute
   ScanRoute: typeof ScanRoute
+  ReportsIndexRoute: typeof ReportsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -99,6 +109,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ScanRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reports/': {
+      id: '/reports/'
+      path: '/reports'
+      fullPath: '/reports/'
+      preLoaderRoute: typeof ReportsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -107,6 +124,7 @@ const rootRouteChildren: RootRouteChildren = {
   MapRoute: MapRoute,
   ReportRoute: ReportRoute,
   ScanRoute: ScanRoute,
+  ReportsIndexRoute: ReportsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
