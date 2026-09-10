@@ -98,8 +98,14 @@ function ReportPage() {
   };
 
   const submit = () => {
-    if (!category) return toast.error("Please choose a waste category.");
-    if (!location.trim()) return toast.error("Please add the location.");
+    if (!category) {
+      toast.error("Please choose a waste category.");
+      return;
+    }
+    if (!location.trim()) {
+      toast.error("Please add the location.");
+      return;
+    }
 
     setSubmitting(true);
     const jitter = () => (Math.random() - 0.5) * 0.04;
